@@ -1,0 +1,5 @@
+select Id,(Select id,Installment_Type__c,Status__c,CreatedDate from Installments1__r where  Installment_Type__c='Payable' AND Status__c='Paid' AND Contact__c=:u.contactId),
+                                  (select id,AL_CleaningAmt__c,AL_DmgPropAmt__c,AL_GardeningAmt__c,AL_Rent_Arrears__c,AL_RedecorationAmt__c,AL_OtherAmt__c from Repayment_Requests__r) 
+                                  Start_Date__c,Payment_Received_By_Scheme__c,Deposit_Account_Number__c,Property_Address__c,Deposit_Amount__c,Case_Status__c,Amount_paid_to_AG_LL__c,Amount_paid_to_TenantNew__c, 
+                                  customer__r.Name,recordType.Name from Deposit__c where recordType.Name = 'SDS Deposit' AND Payment_Received_By_Scheme__c>=:startDate AND Payment_Received_By_Scheme__c <=:endDate 
+                                  AND Case_Status__c IN ('Deposit closed - deposit repaid in part','Deposit closed - deposit repaid in full','Deposit closed - unable to repay'
