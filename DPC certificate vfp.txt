@@ -1,0 +1,366 @@
+<apex:page controller="DPCController" readOnly="true"  
+           applyHtmlTag="false"     
+           sidebar="false"     
+           showHeader="false"     
+           cache="true" renderAs="pdf"
+          >
+
+
+<apex:styleSheet value="{!URLFOR($Resource.CertificatePage,'/assets/css/custom.css')}" />
+   <apex:includeScript value="{!URLFOR($Resource.CertificatePage,'/assets/js/plugin.min.js')}"/>
+         <apex:includeScript value="{!URLFOR($Resource.CertificatePage,'/assets/js/custom.js')}"/>
+
+<head>
+ <style type="text/css">
+    @page  {
+  width:992px;
+      margin: .4cm;
+     size: 8.5in 11.8in;
+}
+.rectBox{
+     font-weight: bold;
+    color: #000;
+    border-radius: 12px;
+    font-size: 16px;
+    border: 2px solid #3A7BBF;
+    margin-bottom: 15px;
+    padding: 1rem; 
+     }
+  .rowClass{
+         display: flex;
+    flex-wrap: wrap;
+     }
+  .colSize8{   
+     flex: 0 0 66.6666666667%;
+    max-width: 66.6666666667%;
+   }  
+     .colored{
+     color: #3A7BBF;}
+     .colSize4{
+     padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+     flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+       border: 2px solid #3A7BBF;
+     }
+ .innerLable{
+     padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+     background-color: #3A7BBF;
+    color: #fff;
+     border: 2px solid #3A7BBF;
+     }
+     p {
+     margin-bottom:0;
+     font-size: 16px;
+    line-height: 24px;
+    color: #4D4C4C;
+     }
+    </style>
+        </head>
+        
+               <body>
+                 <table>
+                    <tr>
+                    <td style="width: 65%;">
+                    <table>
+                         <tr><td>
+                          <div style="width: 550px;border-bottom: 1px dashed #3A7BBF;margin-bottom:20px;">
+                             <img style="width: 310px;" src="{!URLFOR($Resource.TDSTheme, '/assets/img/Logo_FIles.png')}" alt="Logo" title="SDS Logo"/>
+                          <div style="height:10px">
+                         </div>
+                        </div>
+                        </td></tr>
+                        
+                        <tr><td>
+                        <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:62%;" class="innerLable colSize8"><div>Amount of deposit protected</div></td>
+                                        <td style="width:38%;" class="colSize4"><p>£{!deptObj.Actual_Protected_Amount__c}</p></td> 
+                                    </tr>
+                                </table>
+
+                       
+                             </td></tr>
+                        
+                        <tr><td>  
+                            <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:62%;" class="innerLable colSize8"><div >Date SafeDeposits received the deposit</div></td>
+                                        <td style="width:38%;" class="colSize4"> 
+                                        <p> <apex:outputText value="{0, date,  dd / MM / yyyy}">
+                                        <apex:param value="{!deptObj.Payment_Received_By_Scheme__c}" /> </apex:outputText></p>
+                                        </td>
+                                    </tr>
+                                </table>
+                         
+                             </td></tr>
+                        
+                        <tr><td> 
+                            
+                             <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:38%;" class="innerLable colSize8"><div >Address of the property to which the tenancy deposit relates</div></td>
+                                        <td style="width:62%;" class="colSize4">
+                                            <p>{!deptObj.Property__r.House_No__c} {!deptObj.Property__r.Street__c}</p>
+                                            <p>{!deptObj.Property__r.City__c}</p>
+                                            <p>{!deptObj.Property__r.State__c}</p>
+                                            <p>{!deptObj.Property__r.Country__c}</p>
+                                            </td>
+                                    </tr>
+                                </table>
+                
+                             </td></tr>
+                        
+                        <tr><td>
+                             <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:38%;" class="innerLable colSize8"><div >Name of tenant(s)</div></td>
+                                       <!-- <td style="width:62%;" class="colSize4"><p>{!tenantName }</p></td>-->
+                                    </tr>
+                                </table>
+                           
+                             </td></tr>
+                        
+                        <tr><td>
+                            <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:38%;" class="innerLable colSize8"><div >Name and contact details of the landlord</div></td>
+                                        <td style="width:62%;" class="colSize4"> 
+                                        <p>{!deptObj.Property__r.Primary_Landlord__r.Account.Name}</p>
+                                        <p>{!deptObj.Property__r.Primary_Landlord__r.Account.AddressFinal__c}</p>
+                                       <!-- <p>{!deptObj.Property__r.Primary_Landlord__r.Account.BillingCity}</p>
+                                        <p>{!deptObj.Property__r.Primary_Landlord__r.Account.BillingState}</p>
+                                        <p>{!deptObj.Property__r.Primary_Landlord__r.Account.BillingPostalCode}</p>
+                                        <p>{!deptObj.Property__r.Primary_Landlord__r.Account.BillingCountry}</p>-->
+                                        <p></p></td>
+                                    </tr>
+                                </table>
+                           
+                             </td></tr>
+                        
+                        <tr><td>
+                             <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:62%;" class="innerLable colSize8"><div >SafeDeposits DAN No.</div></td>
+                                        <td style="width:38%;" class="colSize4"><p>{!deptObj.Name}</p></td>
+                                    </tr>
+                                </table>
+                          
+                             </td></tr>
+                        
+                        <tr><td>
+                                <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:62%;" class="innerLable colSize8"><div >Amount of deposit in the tenancy agreement</div></td>
+                                        <td style="width:38%;" class="colSize4"><p>£{!deptObj.Actual_Protected_Amount__c}</p></td>
+                                    </tr>
+                                </table>
+                         
+                             </td></tr>
+                        
+                      
+                        <tr  ><td>
+                              <apex:outputPanel rendered="{!or(deptObj.Customer__r.RecordType.Name == 'Letting Agent',deptObj.Customer__r.RecordType.Name == 'Organization')}">
+                            <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:38%;" class="innerLable colSize8"><div >Agent's contact details</div></td>
+                                           <td style="width:62%;" class="colSize4"> 
+                                        <p>{!deptObj.Customer__r.Name}</p>
+                                        <p>{!deptObj.Customer__r.BillingStreet}</p>
+                                        <p>{!deptObj.Customer__r.BillingCity}</p>
+                                        <p>{!deptObj.Customer__r.BillingState}</p>
+                                        <p>{!deptObj.Customer__r.BillingPostalCode}</p>
+                                        <p>{!deptObj.Customer__r.BillingCountry}</p>
+                                        <p></p></td>
+                                    </tr>
+                                </table>
+                            
+ </apex:outputPanel>                            
+                             </td></tr>
+                       
+                        <tr><td>
+                             <table style="width:100%;" class="rectBox">
+                                    <tr>
+                                        <td style="width:38%;" class="innerLable colSize8"><div >Signature</div></td>
+                                        <td style="width:62%;" class="colSize4"> <img src="{!URLFOR($Resource.CertificatePage, '/assets/img/cf_sign.png')}" alt="Signature"/></td>
+                                    </tr>
+                                </table>
+                            
+
+                             </td></tr>
+                        
+                        <tr><td>
+                             <table style="width:100%;" class="rectBox">
+                                    <tr ><td class="colored">
+                                      Signed by Mike Smith, Head of SafeDeposits Scotland, SafeDeposits Scotland Ltd. 
+                                    </td></tr>
+                                 <tr ><td>
+                                     SafeDeposits Scotland, Lower Ground, 250 West George Street, Glasgow, G2 4QY  
+                                    </td></tr>
+                                 <tr><td>
+                                       <span class="colored">t:</span> <a style="color:black" href="tel:03333 213136">03333 213136</a>
+                            <span class="colored">e:</span> <a style="color:black" href="mailTo:info@safedepositsscotland.com"> info@safedepositsscotland.com</a> 
+                            <a class="colored" href="https://www.safedepositsscotland.com/" target="_blank">safedepositsscotland.com</a> 
+                                 </td>   </tr>
+                                </table>
+                            
+
+                             </td></tr>
+                        </table>  
+                   
+                      </td>
+                   <td style="width: 35%;">  
+                       <div style="margin-left:-60px;margin-bottom: 200px;">
+                          <table style="width:50%;">
+                           <tr>
+                           <td>
+                                  <img style="width: 200px;text-align: center;" src="{!URLFOR($Resource.CertificatePage, '/assets/img/Certificate.png')}" alt="Certificate"/>
+                       
+                               </td>
+                              </tr>
+                          <tr style="margin-left:-200px">
+                           <td > 
+                              <div style="margin-top:10px;font-family: arial;font-weight: bold;color: #3A7BBF;font-size: 16px;line-height: 24px;margin-bottom: 15px;">
+                                  
+                               The Tenancy Deposit Schemes (Scotland) Regulations 2011 require all landlords who have to register with their local authority to transfer their tenancy deposits to an approved tenancy deposit scheme.
+                            </div>
+                            <div style="font-size: 14px;line-height: 20px;color: #000;">
+                                
+                              This certificate confirms that your landlord has paid your deposit to us (which means that we will safeguard your deposit during the tenancy) and gives you key information about the protection of your deposit, in accordance with Regulation 22(2). SafeDeposits Scotland is a tenancy deposit protection scheme approved by the Scottish Ministers.
+                                 <div style="margin-top:10px;">Please read this certificate alongside the letter/email which accompanies it. </div>
+                                </div>
+                               </td>
+                              </tr>
+                           </table> 
+                          
+                       
+                       </div>
+                     
+                
+                 
+                  </td>
+                </tr>
+   
+                    </table>
+                    <!-- Certificate HTML End -->
+
+        <!-- Certificate Footer HTML Start 
+        <footer class="certificate-detail-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <p class="colored">Signed by Carol Bradburn, Client Account Manager, SafeDeposits Scotland Ltd.</p>
+                        <p>SafeDeposits Scotland, Lower Ground, 250 West George Street, Glasgow, G2 4QY</p>
+                        <p><span class="colored">t:</span> <a href="tel:03333 213136">03333 213136</a>
+                            <span class="colored">e:</span> <a href="mailTo:info@safedepositsscotland.com"> info@safedepositsscotland.com</a> 
+                            <a class="colored" href="https://www.safedepositsscotland.com/" target="_blank">safedepositsscotland.com</a> 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>-->
+   
+    </body>
+
+</apex:page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public without sharing class DPCController{
+    
+    public List<Deposit__c> deptList{get;set;}
+    public Deposit__c deptObj {get;set;}
+    public String currentParam {get;set;}
+    public String tenantsName {get;set;}
+    public String depositProtectedAmount {get;set;}
+    //public String primaryLandlordName {get;set;}
+    //public String primaryLandlordAddress {get;set;}
+    public string testName {get;set;}
+    public List<String> tenantList {get;set;}
+    public Datetime revisedDate {get;set;}
+    public string isDownload {get;set;}
+    public string customerRecordType {get;set;}
+    public String tenancyStatus {get;set;}
+    
+    
+    public DPCController() {
+        
+        currentParam = ApexPages.currentPage().getParameters().get('depoId'); 
+       
+        isDownload = ApexPages.currentPage().getParameters().get('isDownload');
+        System.debug('Id='+currentParam );
+        tenantList = new List<String>();
+        
+        deptObj = [select id, Name,Property__r.Property_Owner__r.Name, Property__r.House_No__c, Property__r.Street__c, Property__r.City__c, Property__r.Postal_Code__c,Property__r.State__c, Property__r.County__c,Property__r.Country__c, CreatedDate,
+                   Customer__r.Name, Customer_Record_Type__c,Customer__r.Record_type_name__c, Tenants_Name__c, Number_of_Tenants__c, Start_Date__c, End_Date__c, Date_Deposit_Received__c, Date_Deposit_Registered_with_TDS__c,Payment_Received_By_Scheme__c, Deposit_Amount__c,  Property_Address__c, LastModifiedDate,
+                   Status__c,Actual_Protected_Amount__c,Customer__r.BillingStreet,Customer__r.BillingCity,Property__r.Property_Owner__r.BillingStreet,Property__r.Property_Owner__r.BillingCity,
+                   Property__r.Property_Owner__r.BillingState,Property__r.Property_Owner__r.BillingPostalCode,Property__r.Property_Owner__r.BillingCountry,
+                   Customer__r.BillingState,Customer__r.BillingPostalCode,Customer__r.BillingCountry,
+                   Property__r.Primary_Landlord__c,Property__r.Primary_Landlord__r.Name,Property__r.Primary_Landlord__r.MailingStreet,Property__r.Primary_Landlord__r.MailingCity,
+                   Property__r.Primary_Landlord__r.MailingState,Property__r.Primary_Landlord__r.MailingPostalCode,Property__r.Primary_Landlord__r.MailingCountry,
+                   (Select id, Name, deposit_holder__r.Name, LastModifiedDate from Deposit_Allocations__r)
+                   from Deposit__c Where Id =: currentParam AND Property__r.Primary_Landlord__r.Name!=null limit 1 ];
+        
+        system.debug('Line--41'+deptObj);
+        system.debug('Line--42'+deptObj.Customer__r.Record_type_name__c);
+        system.debug('Line--43'+deptObj.Customer__r.Name);
+        depositProtectedAmount = String.valueOf(deptObj.Actual_Protected_Amount__c);
+        customerRecordType = deptObj.Customer__r.Record_type_name__c;
+        system.debug('Line--##'+customerRecordType);
+        tenantsName = '';
+        Boolean hasComma = false;
+        testName = deptObj.Property__r.Primary_Landlord__r.Name;
+        String str = 'attachment; filename='+deptObj.Name+' - DPC.pdf';
+        System.debug('Start of Loop');
+        System.debug('Size of Deposit_Allocations__r: ' + deptObj.Deposit_Allocations__r.size());
+        if(deptObj.Status__c=='Deposits repayments concluded in the last year'){
+            tenancyStatus='Tenancy closed, deposit repaid';
+        }
+        else{
+            tenancyStatus='Deposits held by scheme';
+        }
+        List<String>tenantList1 = new List<String>();
+        for(Deposit_Allocation__c depAll : deptObj.Deposit_Allocations__r) {
+            System.debug('depAll'+depAll.LastModifiedDate);
+            System.debug('tenantsName'+depAll.deposit_holder__r.Name);
+            if (depAll.deposit_holder__r != null) {
+                System.debug('tenantsName' + depAll.deposit_holder__r.Name);
+                tenantList.add(depAll.deposit_holder__r.Name);
+                
+            }
+            System.debug('tenantNameList11-->'+tenantList);
+            if (revisedDate == depAll.LastModifiedDate) revisedDate = depAll.LastModifiedDate;
+            if (revisedDate < depAll.LastModifiedDate) revisedDate = depAll.LastModifiedDate; 
+        }
+        System.debug('End of Loop');
+        System.debug('FinaltenantNameList-->'+tenantList);
+        if(isDownload == 'true'){
+            
+            System.debug('line-64-->'+str);
+            Apexpages.currentPage().getHeaders().put('content-disposition',str);
+        }
+        
+    }
+    
+    
+}
